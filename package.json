@@ -1,0 +1,54 @@
+{
+  "name": "estimator",
+  "version": "0.0.0",
+  "author": "Julian Giuca",
+  "bin": {
+    "estimator": "./bin/run"
+  },
+  "bugs": "https://github.com/Programming/estimator/issues",
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.2",
+    "@types/node": "^14.17.4",
+    "tslib": "^1.14.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/Programming/estimator",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "estimator",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "Programming/estimator",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts",
+  "devDependencies": {
+    "@oclif/test": "^1.2.8",
+    "@types/mocha": "^8.2.2",
+    "mocha": "^9.0.1",
+    "nyc": "^15.1.0",
+    "typescript": "^4.3.5"
+  }
+}
