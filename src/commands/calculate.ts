@@ -1,12 +1,10 @@
 import {Command, flags} from '@oclif/command'
 
-export default class Hello extends Command {
-  static description = 'describe the command here'
+export default class Calculate extends Command {
+  static description = 'What metadata needs to be added to this estimation?'
 
   static examples = [
-    `$ estimator hello
-hello world from ./src/hello.ts!
-`,
+    `$ estimator calculate --aws --file ./access.log`,
   ]
 
   static flags = {
@@ -18,7 +16,9 @@ hello world from ./src/hello.ts!
   static args = [{name: 'file'}]
 
   async run() {
-    const {args, flags} = this.parse(Hello)
+    const {args, flags} = this.parse(Calculate)
+
+    if (Object.keys(flags).length == 0) console.log('Please run calculate --help to see options available')
 
     if (flags.file) console.log(`--file is: ${flags.file}`)
     if (flags.aws) console.log(`--aws is set`)
