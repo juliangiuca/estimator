@@ -64,11 +64,20 @@ export default class NewRelicPipeline {
     return logLine
   }
 
+  static logPatternEnrichment(logLine: LooseObject) {
+
+    logLine.newrelic = logLine.newrelic ?? {}
+    logLine.newrelic.logPattern = logLine.newrelic.logPattern ?? "nr.DID_NOT_MATCH"
+
+    return logLine
+  }
+
   static do(logLine: LooseObject) {
     let parsedLogLine: LooseObject;
     parsedLogLine = NewRelicPipeline.addMetadata(logLine)
     parsedLogLine = NewRelicPipeline.filter(parsedLogLine)
     parsedLogLine = NewRelicPipeline.jsonParse(parsedLogLine)
+    parsedLogLine = NewRelicPipeline.logPatternEnrichment(parsedLogLine)
     parsedLogLine = NewRelicPipeline.entityLookup(parsedLogLine)
     parsedLogLine = NewRelicPipeline.grokParse(parsedLogLine)
     return parsedLogLine
