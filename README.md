@@ -4,6 +4,7 @@ Log data is noisy. We need to add metadata in order to improve the value of logs
 
 This script attempts to show the impact on adding metadata to your logs - and how it impacts the size of logs at rest.
 
+![Screenshot ofestimator running](https://github.com/juliangiuca/estimator/blob/main/images/screenshot.png?raw=true)
 
 
 # Installation
