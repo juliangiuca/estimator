@@ -1,8 +1,8 @@
-estimator
+Estimator
 =========
-When we ship log data, we add metadata. Each shipper has slightly different metadata - FluentD vs Infrastructure. Ingestion pipelines also add various metadata - for parsing, for keeping logs in order, and keeping them unique.
+Log data is noisy. We need to add metadata in order to improve the value of logs. By adding metadata we also increase the size of logs. Each shipper has it's own metadata that's added - and each bit of metadata has different tradeoffs of value.
 
-This script attempts to show the impact on adding metadata to your logs - and how it impacts the size of logs at rest
+This script attempts to show the impact on adding metadata to your logs - and how it impacts the size of logs at rest.
 
 
 
@@ -28,5 +28,6 @@ argument | options
 
 # TODO
 * Add support for different cloud based metadata. e.g. shipping via Infra on AWS vs on metal
-* Adding support for k8s
-* Adding support for basic parsing, like apache logs
+* Add support for k8s
+* Add support for basic parsing, like apache logs
+* Add support for Logs in Context (e.g. Java)
