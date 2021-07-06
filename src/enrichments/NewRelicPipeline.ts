@@ -29,7 +29,7 @@ export default class NewRelicPipeline {
   static entityLookup(logLine: LooseObject = {}) {
     if (logLine.service_name) {
       logLine.entity = logLine.entity ?? {};
-      logLine.entity.guid = "NzU2MDUzfEVYVHxTRVJWSUNFfC0zNzc2MTgxMTYyNDI3MDg3NDAw"
+      logLine.entity.guid = logLine.entity.guid ?? "NzU2MDUzfEVYVHxTRVJWSUNFfC0zNzc2MTgxMTYyNDI3MDg3NDAw"
       logLine.entity.guids = [logLine.entity.guids, "NzU2MDUzfEVYVHxTRVJWSUNFfC0zNzc2MTgxMTYyNDI3MDg3NDAw"].join('|')
       logLine.entity.name = "synthticMonitor-Production"
       logLine.entity['type'] =  "SERVICE"
