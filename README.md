@@ -23,6 +23,7 @@ node ./bin/run calculate --file ./samples/access.log --shipper infra
 
 argument | options
 ---------|-------------
+--help, -h | A place to start
 --file, -f | Path to a log file. e.g. samples/access.log
 --shipper -s | Which shipper are you using to send your logs (options: Logstash, Fluentd, Fluentbit, Infra)
 
