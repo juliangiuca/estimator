@@ -1,4 +1,6 @@
 import {Command, flags} from '@oclif/command'
+import ProcessLineByLine from '../ProcessLineByLine'
+
 
 export default class Calculate extends Command {
   static description = 'What metadata needs to be added to this estimation?'
@@ -9,8 +11,13 @@ export default class Calculate extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
-    aws: flags.boolean(),
-    file: flags.string(),
+    file: flags.string({
+      required: true
+    }),
+    shipper: flags.string({
+      required: true,
+      options: ['fluentd', 'fluentbit', 'logstash', 'infra']
+    }),
   }
 
   static args = [{name: 'file'}]
@@ -21,7 +28,10 @@ export default class Calculate extends Command {
     if (Object.keys(flags).length == 0) console.log('Please run calculate --help to see options available')
 
     if (flags.file) console.log(`--file is: ${flags.file}`)
-    if (flags.aws) console.log(`--aws is set`)
+    if (flags.shipper) console.log(`--shipper is set to ${flags.shipper}`)
+
+    // let log = new Log(
+    new ProcessLineByLine(flags)
 
   }
 }

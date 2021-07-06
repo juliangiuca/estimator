@@ -8,6 +8,9 @@
 interface LooseObject { [key: string]: any }
 
 export default class NewRelicPipeline {
+  static zeroRatedAttributes = [
+    /^newrelic$/
+  ]
 
   static addMetadata(logLine: LooseObject = {}) {
     logLine.messageId = '77ff441c-62e9-4811-8eb3-018a774eb594'
@@ -69,6 +72,24 @@ export default class NewRelicPipeline {
     parsedLogLine = NewRelicPipeline.entityLookup(parsedLogLine)
     parsedLogLine = NewRelicPipeline.grokParse(parsedLogLine)
     return parsedLogLine
+  }
+
+  static doZeroRate(logLine: LooseObject) {
+    let sanitized = logLine;
+
+    NewRelicPipeline.zeroRatedAttributes.forEach((attr) => {
+      Object.keys(logLine).forEach((key) => {
+        if (key.match(attr)) delete sanitized[key]
+      })
+
+    })
+    return sanitized
+  }
+
+  static doCalculate(logLine: LooseObject) {
+
+    let sanitized = NewRelicPipeline.doZeroRate(logLine);
+    return Buffer.byteLength(JSON.stringify(sanitized))
   }
 
 }

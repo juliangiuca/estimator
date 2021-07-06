@@ -11,6 +11,7 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
     "@types/node": "^14.17.4",
+    "cli-table3": "^0.6.0",
     "tslib": "^1.14.1"
   },
   "engines": {

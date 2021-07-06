@@ -85,4 +85,30 @@ describe('Metadata added when received by New Relic', () => {
       expect(output).to.not.have.property('foo')
     })
   }) //json parsing
+
+  describe("doZeroRate", () => {
+    it("should not count `newrelic` attributes", () => {
+      let fixture = {
+        message: "hello world",
+        newrelic: {
+          foo: "hello world"
+        }
+      };
+
+      expect(NewRelicPipeline.doZeroRate(fixture)).to.not.have.property('newrelic')
+
+    })
+
+    it("should count message", () => {
+
+      let fixture = {
+        message: "hello world",
+        newrelic: {
+          foo: "hello world"
+        }
+      };
+
+      expect(NewRelicPipeline.doZeroRate(fixture)).to.have.property('message')
+    })
+  })
 })

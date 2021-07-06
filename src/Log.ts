@@ -2,13 +2,15 @@ import NewRelicPipeline from './enrichments/NewRelicPipeline'
 
 interface LooseObject { [key: string]: any }
 
-type StubFunction = (a: LooseObject) => LooseObject;
+type StubObjectFunction = (a: LooseObject) => LooseObject;
+type StubNumberFunction = (a: LooseObject) => number;
 
 
 class LogLine {
   log: LooseObject = {};
 
-  constructor(log: LooseObject = {}) {
+  constructor(log: LooseObject | String) {
+    if (typeof log == "string") log = {message: log}
     this.log = log
   }
 
@@ -26,8 +28,12 @@ class LogLine {
   //My thinking is our pipeline receives logs as an array, 
   //and each log line has something acted onto it. Well, the Log object is that array
   //so the things acting on it are passed as a function
-  doFunc(fn: StubFunction) {
+  doFunc(fn: StubObjectFunction) {
     this.log = fn(this.log)
+  }
+
+  tally(fn: StubNumberFunction) {
+    return fn(this.log)
   }
 
 }
@@ -63,6 +69,12 @@ export default class Log {
     return this.logLines.map((logLine) => {
       return logLine.toJson()
     })
+  }
+
+  tally() {
+    return this.logLines.reduce((accumulator, line) => {
+      return accumulator + line.tally(NewRelicPipeline.doCalculate);
+    }, 0)
   }
 
 };
