@@ -87,26 +87,29 @@ describe('Metadata added when received by New Relic', () => {
   }) //json parsing
 
   describe("doZeroRate", () => {
-    it("should not count `newrelic` attributes", () => {
-      let fixture = {
+    let fixture: {};
+
+    beforeEach(() => {
+      fixture = {
         message: "hello world",
         newrelic: {
           foo: "hello world"
+        },
+        nr: {
+          logServiceSource: 'LogsComingFromVortex'
         }
-      };
+      }
+    })
 
+    it("should remove `newrelic` attributes", () => {
       expect(NewRelicPipeline.doZeroRate(fixture)).to.not.have.property('newrelic')
+    })
 
+    it("should remove `nr` attributes", () => {
+      expect(NewRelicPipeline.doZeroRate(fixture)).to.not.have.property('nr')
     })
 
     it("should count message", () => {
-
-      let fixture = {
-        message: "hello world",
-        newrelic: {
-          foo: "hello world"
-        }
-      };
 
       expect(NewRelicPipeline.doZeroRate(fixture)).to.have.property('message')
     })

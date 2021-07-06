@@ -50,7 +50,7 @@ export default class Log {
     })
   }
 
-  addMeta(method: string) {
+  addShipperMeta(method: string) {
 
     let meta = require(`./enrichments/${method}`);
 
@@ -61,7 +61,7 @@ export default class Log {
 
   doNewRelicPipeline() {
     this.logLines.forEach((logLine, i) => {
-      logLine.doFunc(NewRelicPipeline.do)
+      logLine.doFunc(NewRelicPipeline.doPipeline)
     })
   }
 

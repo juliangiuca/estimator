@@ -33,18 +33,22 @@ export default class ProcessLineByLine {
       this.counter = this.counter + 1;
       this.originalTally = this.originalTally + Buffer.byteLength(line);
       this.buffer.push(line)
-      if (this.buffer.length < 1000) this.doProcessBatch()
+      if (this.buffer.length > 1000) this.doProcessBatch()
     });
 
     input.on('end', () => {
+      this.doProcessBatch()
+
       var table = new Table({
         head: ['Source', 'Size']
-    });
-      formatBytes
+      });
+
       table.push(
-          ['Original',       formatBytes(this.originalTally)],
-          ['On disk size',   formatBytes(fs.statSync(this.file).size)],
-          ['in New Relic', formatBytes(this.newRelicTally)],
+          ['Original',                formatBytes(this.originalTally)],
+          ['On disk size',            formatBytes(fs.statSync(this.file).size)],
+          ['In New Relic',            formatBytes(this.newRelicTally)],
+          ['New Relic multiplier',    `${(Math.round((this.newRelicTally / this.originalTally) * 10))/10}x`],
+          ['Total lines',   `# ${this.counter}`],
           [{
             colSpan: 2,
             content: `file: ${this.file}, shipper: ${this.shipper}`
@@ -57,7 +61,8 @@ export default class ProcessLineByLine {
 
   doProcessBatch() {
     let log = new Log(this.buffer)
-    log.addMeta(this.shipper)
+    log.addShipperMeta(this.shipper)
+    log.doNewRelicPipeline()
     this.newRelicTally = this.newRelicTally + log.tally();
 
     this.buffer = [];

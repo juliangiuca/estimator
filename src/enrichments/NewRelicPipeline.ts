@@ -9,7 +9,8 @@ interface LooseObject { [key: string]: any }
 
 export default class NewRelicPipeline {
   static zeroRatedAttributes = [
-    /^newrelic$/
+    /^newrelic$/,
+    /^nr$/
   ]
 
   static addMetadata(logLine: LooseObject = {}) {
@@ -21,7 +22,7 @@ export default class NewRelicPipeline {
 
     logLine.newrelic = logLine.newrelic ?? {}
     logLine.newrelic.logs = logLine.newrelic.logs ?? {}
-    logLine.newrelic.logs.batchIndex = 1
+    logLine.newrelic.logs.batchIndex = 9999
 
     return logLine
   }
@@ -72,7 +73,7 @@ export default class NewRelicPipeline {
     return logLine
   }
 
-  static do(logLine: LooseObject) {
+  static doPipeline(logLine: LooseObject) {
     let parsedLogLine: LooseObject;
     parsedLogLine = NewRelicPipeline.addMetadata(logLine)
     parsedLogLine = NewRelicPipeline.filter(parsedLogLine)

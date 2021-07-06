@@ -9,7 +9,7 @@ describe('Sending logs adds metadata', () => {
       ];
 
       let myLog = new Log(fixture);
-      myLog.addMeta('http');
+      myLog.addShipperMeta('http');
       myLog.doNewRelicPipeline();
       let json = myLog.toJson();
 
@@ -26,7 +26,7 @@ describe('Sending logs adds metadata', () => {
       ];
 
       let myLog = new Log(fixture);
-      myLog.addMeta('http');
+      myLog.addShipperMeta('http');
       let json = myLog.toJson();
 
       json.forEach((line) => {
@@ -44,13 +44,10 @@ describe('Sending logs adds metadata', () => {
           message: "hello world",
           messageId: '77ff441c-62e9-4811-8eb3-018a774eb594',
           timestamp: '1625286274565',
-          nr: {
-            logServiceSource: 'LogsComingFromVortex'
-          }
       };
 
       let myLog = new Log(fixture);
-      myLog.addMeta('http');
+      myLog.addShipperMeta('http');
       myLog.doNewRelicPipeline();
       let tally = myLog.tally();
 
